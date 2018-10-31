@@ -74,8 +74,8 @@
 
                                 <div class="m-l-20 m-t-20">
                                     <div id="oldemail">
-                                        <label class="m-t-20" for="email1"><input type="checkbox"  id="checkemailcad" name="email1" required>&nbsp Eu quero receber em um e-mail já cadastrado</label>
-                                        <input type="email" class="form-control col-lg-4" name="email1" value="{{\Request::session()->get('email')}}" required>
+                                        <label class="m-t-20" for="email_cadastrado"><input type="checkbox"  id="checkemailcad" name="email_cadastrado" required>&nbsp Eu quero receber em um e-mail já cadastrado</label>
+                                        <input type="email" class="form-control col-lg-4" name="email_cadastrado" value="{{\Request::session()->get('email')}}" required>
                                     </div>
                                     <br>
                                     <div id="newemail">

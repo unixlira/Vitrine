@@ -269,10 +269,20 @@ Route::post('notificacoesapp/salvartexto','NotificacoesAppController@salvarTexto
 
 Route::get('pagamentos/planos', 'PagamentosController@planos');
 
+Route::get('pagamentos/forma_pagamento/{id}', 'PagamentosController@formapagamento');
+
 Route::post('pagamentos/salvarPedido', 'PagamentosController@salvarPedido');
 
 Route::get('pagamentos/financeiro/{user}', 'PagamentosController@financeiro');
 
-Route::get('pagamentos/forma_pagamento/{id}', 'PagamentosController@formapagamento');
-
 Route::get('pagamentos/termos', 'PagamentosController@termos');
+
+// --------------------------------------------------------- //
+// -- FINANCEIRO -- //
+// --------------------------------------------------------- //
+
+Route::post('financeiro/editar/{id}', 'PagamentosController@editarPlano');
+
+Route::get('pagamentos/financeiro/cancelamento/{id}', 'PagamentosController@cancelamento');
+
+Route::post('financeiro/excluir/{id}', 'PagamentosController@deletePlano');

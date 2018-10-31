@@ -10,7 +10,6 @@ use Yajra\Datatables\Datatables;
 use View;
 use Carbon\Carbon;
 use Session;
-
 use App\Usuarios;
 use App\Planos;
 use App\Pedidos;
@@ -37,7 +36,10 @@ class PagamentosController  extends Controller
     public function financeiro(Request $request, $user){
         
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
-        return view('pagamentos.financeiro',compact('request','user'));
+        $planos = Pedidos::where('id_usuario', '=', $user->id)->get();
+        $acao = "pagamentos/updateFinanceiro";
+
+        return view('pagamentos.financeiro',compact('request','user','planos','acao'));
     }
 
     public function formapagamento(Request $request, $id){
@@ -61,19 +63,17 @@ class PagamentosController  extends Controller
 
     public function salvarPedido(Request $request){ 
         
-       
+        $user = Usuarios::find(\Request::session()->get('id_usuario'));
 
         $plano = array();
-		$plano = new Pedidos; //criando o objeto da classe q manipula o BD para a tabela planos
+		$plano = new Pedidos;
 		$plano->id_usuario = \Request::session()->get('id_usuario');
         $plano->id_plano = $request->id_plano;
-        if(empty('email_fatura')){
-            $plano->email_fatura = $request->email1;
+        if(isset($_POST['email_cadastrado'])){
+            $plano->email_fatura = $request->email_cadastrado;
         }else{
             $plano->email_fatura = $request->email_fatura;
         }
-        
-
         $plano->nome_plano = $request->nome_plano;             
         $plano->preco_plano = $request->preco_plano;             
         $plano->forma_pgto = $request->radio == 'Cartao de Credito' ? 'Cartao de Credito' : 'Boleto Bancario' ;
@@ -84,9 +84,34 @@ class PagamentosController  extends Controller
         $plano->cvv_cartao = $request->cvv_cartao;
         $plano->save(); //salvando o insert
 
-        //Session::flash('flash_message', 'Salvo com sucesso!');
-        return redirect('/pagamentos/financeiro/'.\Request::session()->get('id_usuario'));
+        return redirect('/pagamentos/financeiro/'.$user->id);
         
-	}
+    }
+
+    public function cancelamento(Request $request, $id){
+
+        $user = Usuarios::find(\Request::session()->get('id_usuario'));
+        $planos = Pedidos::where('id_usuario', '=', $user->id)->get();
+        return view('pagamentos.cancelamento', compact('user','request', 'planos'));
+
+    }
+    
+    public function editarPlano($id){
+        
+        $usuario = Usuarios::find($id);
+        $financeiro = array();
+        $financeiro = new Pedidos;
+
+    }
+
+    public function deletePlano(Request $request, $id){
+
+        $user = Usuarios::find(\Request::session()->get('id_usuario'));
+
+        $plano = Pedidos::findOrFail($id);
+        $plano->delete();
+
+        return redirect('/pagamentos/financeiro/'.$user->id);
+    }
 		
 }

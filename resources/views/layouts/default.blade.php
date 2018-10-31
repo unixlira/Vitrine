@@ -278,7 +278,7 @@ z-index: 999999">
                                     </a>
                                 </li>
                                 <li {!! (($link == 'planos') || ($link == 'financeiro') || ($link == 'pagamentos') ? 'class="active"':"") !!}>
-                                    <a href="{{ URL::to('/pagamentos/financeiro/{$user->id}') }}">
+                                    <a href="{{ URL::to('/pagamentos/financeiro/=') . Request::session()->get('id_usuario')  }}">
                                         <i class="fa fa-angle-right"></i>
                                         &nbsp; Financeiro
                                     </a>

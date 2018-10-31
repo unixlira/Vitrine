@@ -1,7 +1,7 @@
 @extends(('layouts/default'))
 {{-- Page title --}}
 @section('title')
-    Checkout
+    Financeiro
     @parent
 @stop
 {{-- page level styles --}}
@@ -35,93 +35,110 @@
                         <div>
                             <h2>Meu Plano</h2><br>
                         </div>
-                        <form class="financeiro">
+                        <form class="financeiro" action="{{ URL::to('excluir') }}" method="post" novalidate>
                             <div class="m-t-30">
                                 <h4>ADESÃO</h4>
                                 <hr>
                             </div>
+                            
+                            <div class="col-lg-2 m-t-30">
+                                <h5>Planos Contratados:</h5>
+                            </div>                            
 
-                            <div class="col-lg-12 m-l-20 m-t-5 adesao">
-                                <div class="row">
-                                    <div class="col-lg-2 m-t-30">
-                                        <h5>Data:</h5>
-                                        12/12/2018
-                                    </div>
-
-                                    <div class="col-lg-2 m-t-30">
-                                        <h5>Vigência:</h5>
-                                        12/12/2019
-                                    </div>
-
-                                    <div class="col-lg-6 m-t-30">
-                                        <label class="checkbox-inline"><input type="checkbox" value="">&nbsp Renovação Automática</label>
-                                    </div>
-
-                                    <div class="text-rigth m-t-30">
-                                        <label><a href="cancelar.php">&nbsp  Cancelamento do serviço</a></label>
-                                    </div>
-
+                            <div class="col-lg-12  adesao">
+                                <div class="table-responsive">
+                                    <table class=" table table-striped table-bordered table-hover dataTable " id="teste" role="grid">
+                                        <thead>
+                                            <tr scope="row">
+                                                <th scope="col" class="text-center" style="color:#00bf86;">Nome</th>
+                                                <th scope="col" class="text-center" style="color:#00bf86;">Data de Cadastro</th>
+                                                <th scope="col" class="text-center" style="color:#00bf86;">Valor Mensal</th>
+                                                <th scope="col" class="text-center" style="color:#00bf86;">Vigência</th>
+                                                <th nowrap width=10% scope="col" class="text-center" style="color:#00bf86;">Renovação Automática</th>
+                                                <th nowrap width=8% scope="col" class="text-center" style="color:#00bf86;">Cancelar Serviço</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($planos as $plano)
+                                                <tr>
+                                                    <th class="text-center">{{ $plano->nome_plano }}</th>
+                                                    <th class="text-center">{{ $plano->created_at->format('d/m/Y') }}</th>
+                                                    <th class="text-center">R$ {{ $plano->preco_plano }},00</th>
+                                                    <th class="text-center">{{ date('m', strtotime("+365 days",strtotime( $plano->created_at ))) }} Meses</th>
+                                                    <th class="text-center"><i class="fa fa-pencil text-warning" title="Renovação Automática"></i></th>
+                                                    <th class="text-center"><i class="fa fa-ban text-danger" title="Cancelar Serviço"></i></th>
+                                                </tr>
+                                            @endforeach                                    
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
 
                             <br>
+                        </form>
 
-                            <div class="planocontratado">
-                                <div class="m-t-30">
-                                    <h4>PLANO CONTRATADO</h4>
-                                    <hr>
-                                </div>
-
-                                <div class="m-l-20 m-t-20">
-                                    <div class="m-t-30">
-                                        <h5>Plano:</h5><br>
-                                    </div>
-
-                                    <div class="col-lg-12 m-l-20">
-                                        <div class="row">
-                                            <div class="col-lg-4 m-t-5">
-                                                <label>Lite (R$ 200,00 / mês)</label><br>
-                                                <label>Contrato de vigência de 1(um) ano</label>
-                                            </div>
-
-                                            <div class="col-lg-4 m-t-30">
-                                                <label><a href="boleto.php">&nbsp  Editar</a></label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
+                        <form class="financeiro" action="{{ URL::to($acao) }}" method="post" novalidate>
+                            
                             <div class="contatofinanceiro">
                                 <div class="m-t-30">
                                     <h4>CONTATO</h4>
                                     <hr>
                                 </div>
+                                <div class="col-lg-2 m-t-30">
+                                    <h5>Cadastrado Como:</h5>
+                                </div> 
 
-                                <div class="col-lg-12 m-t-30">
+                                <div class="col-lg-8 m-t-30">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input type="email" class="form-control col-lg-12" style="font-style: italic;" value="joseroberto@grafite.com.br" >
+                                            <input type="email" class="form-control col-lg-12" style="font-style: italic;" value="{{$planos[0]->email_fatura}}" >
                                         </div>
-                                        <label class="m-t-20"><a href="boleto.php" class="col">&nbsp  Editar</a></label>
+                                        
+                                            <a href="editar" class="col"><input type="button" class="btn btn-success" value="Editar"></a>
+                                        
                                     </div>
                                 </div>
 
                             </div>
                             <br>
                                 
-                            <div class="">
+                            <div class="contatofinanceiro">
                                 <div class="m-t-30">
                                     <h4>FORMA DE PAGAMENTO</h4>
                                     <hr>
                                 </div>
+                                <div class="col-lg-2 m-t-30">
+                                    <h5>Cadastrado Como:</h5>
+                                </div>
+                                <div class="col-lg-8  adesao">
+                                    <div class="table-responsive">
+                                        <table class=" table table-striped table-bordered table-hover dataTable m-t-20" id="teste" role="grid">
+                                            <thead>
+                                                <tr scope="row">
+                                                    <th scope="col" class="text-center" style="color:#00bf86;">Nome</th>
+                                                    <th scope="col" class="text-center" style="color:#00bf86;">Forma de Pagamento</th>
+                                                    <th nowrap width=10% scope="col" class="text-center" style="color:#00bf86;">Editar Pagamento</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($planos as $plano)
+                                                    <tr>
+                                                        <th class="text-center">{{ $plano->nome_plano }}</th>
+                                                        <th class="text-center">{{ $plano->forma_pgto }}</th>
+                                                        <th class="text-center"><i class="fa fa-pencil text-warning" title="Editar Automática"></i></th>
+                                                    </tr>
+                                                @endforeach                                    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>                                
 
                                 <div class="row">
                                     <div class="m-t-30">
                                         <div class="col">
-                                          <label class="checkbox"><input type="checkbox" ><b>&nbsp Cartão de Crédito</b></label>
-                                          <label><a href="editar.php">&nbsp  Editar</a></label>
+                                          <label class="checkbox"><input type="checkbox" ><b>&nbsp; Cartão de Crédito</b></label>
+                                          <label><a href="editar">Editar</a></label>
                                         </div>
                                     </div>
                                 </div>
@@ -133,6 +150,7 @@
                                 <div class="m-t-30">
                                     <label><b>Nome impresso no Cartão</b></label>
                                     <input type="text" name="nome" class="form-control col-lg-4" placeholder="Nome" style="font-style: italic;"value="José Roberto Lira">
+                                    
                                     <label class="m-t-10"><b>Número do Cartão</b></label>
                                     <input type="text" name="nome" class="form-control col-lg-4" placeholder="Número" style="font-style: italic;" value="2341 4277 5574 3478">
 

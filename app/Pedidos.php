@@ -15,13 +15,13 @@ class Pedidos extends Model
 
     public function usuarios(){
         //informando o Model q existe uma relacao do plano com Usuario:
-        return $this->belongsTo('App\Usuarios', 'id_usuario', 'id_usuario'); //('model', 'chave_estrangeira', 'valor')
+        return $this->belongsTo('App\Usuarios', 'id_usuario', 'id'); //('model', 'chave_estrangeira', 'valor')
         //hasMany indica q a cardinalidade é de 1:n (um plano tem varios usuarios)
     }
 
     public function planos(){
         //informando o Model q existe uma relacao do plano com Usuario:
-        return $this->belongsTo('App\Usuarios', 'id_usuario', 'id_usuario'); //('model', 'chave_estrangeira', 'valor')
+        return $this->belongsTo('App\Planos', 'id_plano', 'id'); //('model', 'chave_estrangeira', 'valor')
         //hasMany indica q a cardinalidade é de 1:n (um plano tem varios usuarios)
     }
 }
