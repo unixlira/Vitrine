@@ -11,7 +11,7 @@ class Pedidos extends Model
     public $timestamps = true; //desabilitando controle de data e hora de manipulação dos registros
 
     //necessário para descriminar quais campos serao aceitos q sejam add em massa, sem descricao individual:
-    protected $fillable = array( 'id', 'id_usuario', 'id_plano','nome_plano', 'preco_plano','email_fatura', 'forma_pgto', 'bandeira_cartao', 'nome_cartao', 'numero_cartao', 'mes_cartao', 'ano_cartao', 'cvv_cartao', 'created_at', 'updated_at');
+    protected $fillable = array( 'id', 'id_usuario', 'id_plano','nome_plano', 'preco_plano','email_fatura', 'forma_pgto', 'bandeira_cartao', 'nome_cartao', 'numero_cartao', 'mes_cartao', 'ano_cartao', 'cvv_cartao', 'renovacao_auto', 'created_at', 'updated_at');
 
     public function usuarios(){
         //informando o Model q existe uma relacao do plano com Usuario:

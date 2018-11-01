@@ -35,7 +35,8 @@
                         <div>
                             <h2>Meu Plano</h2><br>
                         </div>
-                        <form class="financeiro" action="{{ URL::to('excluir') }}" method="post" novalidate>
+                        
+                            
                             <div class="m-t-30">
                                 <h4>ADESÃO</h4>
                                 <hr>
@@ -45,7 +46,7 @@
                                 <h5>Planos Contratados:</h5>
                             </div>                            
 
-                            <div class="col-lg-12  adesao">
+                            <div class="col-lg-8  adesao">
                                 <div class="table-responsive">
                                     <table class=" table table-striped table-bordered table-hover dataTable " id="teste" role="grid">
                                         <thead>
@@ -65,8 +66,14 @@
                                                     <th class="text-center">{{ $plano->created_at->format('d/m/Y') }}</th>
                                                     <th class="text-center">R$ {{ $plano->preco_plano }},00</th>
                                                     <th class="text-center">{{ date('m', strtotime("+365 days",strtotime( $plano->created_at ))) }} Meses</th>
-                                                    <th class="text-center"><i class="fa fa-pencil text-warning" title="Renovação Automática"></i></th>
-                                                    <th class="text-center"><i class="fa fa-ban text-danger" title="Cancelar Serviço"></i></th>
+                                                    
+                                                    @if($plano->renovacao_auto == 1)                                                        
+                                                        <th class="text-center"><a href="{{ URL::to($acao . $plano->id) }}"><i class="fa fa-check text-success" title="ATIVADO: click para desativar renovação automática"></i><a></th>                                                            
+                                                    @else
+                                                        <th class="text-center"><a href="{{ URL::to($acao . $plano->id) }}"><i class="fa fa-close text-dark" title="DESATIVADO: click para ativar renovação automática"></i></a></th>
+                                                    @endif
+
+                                                    <th class="text-center"><a href={{ "excluir/" . $plano->id }} id="icon"><i class="fa fa-ban text-danger" title="Cancelar Serviço"></i></a></th>
                                                 </tr>
                                             @endforeach                                    
                                         </tbody>
@@ -75,30 +82,27 @@
                             </div>
 
                             <br>
-                        </form>
-
-                        <form class="financeiro" action="{{ URL::to($acao) }}" method="post" novalidate>
-                            
+                                                   
                             <div class="contatofinanceiro">
                                 <div class="m-t-30">
                                     <h4>CONTATO</h4>
                                     <hr>
                                 </div>
                                 <div class="col-lg-2 m-t-30">
-                                    <h5>Cadastrado Como:</h5>
+                                    <h5>E-mail:</h5>
                                 </div> 
 
-                                <div class="col-lg-8 m-t-30">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <input type="email" class="form-control col-lg-12" style="font-style: italic;" value="{{$planos[0]->email_fatura}}" >
+                                <form action="{{ URL::to($alteraemail) }}" method="post" novalidate>
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <div class="col-lg-8 m-t-30">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <input name="email_fatura" type="email" class="form-control col-lg-12" style="font-style: italic;" value="{{$planos[0]->email_fatura}}" >
+                                            </div>
+                                                <button type="submit"class="btn btn-success">Editar</button>
                                         </div>
-                                        
-                                            <a href="editar" class="col"><input type="button" class="btn btn-success" value="Editar"></a>
-                                        
                                     </div>
-                                </div>
-
+                                </form>
                             </div>
                             <br>
                                 
@@ -108,7 +112,7 @@
                                     <hr>
                                 </div>
                                 <div class="col-lg-2 m-t-30">
-                                    <h5>Cadastrado Como:</h5>
+                                    <h5>Cadastrado:</h5>
                                 </div>
                                 <div class="col-lg-8  adesao">
                                     <div class="table-responsive">
@@ -126,60 +130,82 @@
                                                     <tr>
                                                         <th class="text-center">{{ $plano->nome_plano }}</th>
                                                         <th class="text-center">{{ $plano->forma_pgto }}</th>
-                                                        <th class="text-center"><i class="fa fa-pencil text-warning" title="Editar Automática"></i></th>
+                                                        <th class="text-center"><a href="" id="edit" onclick="showPayfor()"><i class="fa fa-pencil text-warning" title="Editar Forma de Pagamento"></i></a></th>
                                                     </tr>
                                                 @endforeach                                    
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>                                
-
-                                <div class="row">
-                                    <div class="m-t-30">
-                                        <div class="col">
-                                          <label class="checkbox"><input type="checkbox" ><b>&nbsp; Cartão de Crédito</b></label>
-                                          <label><a href="editar">Editar</a></label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="m-t-10">
-                                    <img src="{{asset('assets/img/pagamentos/visa.png')}}" width="70" height="25" class="m-l-20">
-                                </div> 
-
-                                <div class="m-t-30">
-                                    <label><b>Nome impresso no Cartão</b></label>
-                                    <input type="text" name="nome" class="form-control col-lg-4" placeholder="Nome" style="font-style: italic;"value="José Roberto Lira">
-                                    
-                                    <label class="m-t-10"><b>Número do Cartão</b></label>
-                                    <input type="text" name="nome" class="form-control col-lg-4" placeholder="Número" style="font-style: italic;" value="2341 4277 5574 3478">
-
-                                    <div class="datavalidade col-lg-2">
-                                        <div class="row ">
-                                            <label class="m-t-10"><b>Data de Validade</b>
-                                                <div class="col-lg-12  row m-t-10">
-                                                    <input type="text" name="nome" class="form-control col-lg-4" placeholder="&nbsp MM" style="font-style: italic;" value="12">&nbsp
-                                                    <input type="text" name="nome" class="form-control col-lg-4" placeholder="&nbsp AA" style="font-style: italic;" value="2024">
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="ccv">
-                                    <label class="m-t-10"><b>CCV</b></label>
-                                    <input type="text" name="nome" class="form-control col-lg-2" placeholder="CCV" style="font-style: italic;" value="775">
-                                </div><br>
-
-                                <div class=text-left>
-                                    <button type="button" class="btn btn-success" style="width: 160px;">Salvar</button>
                                 </div>
                                 
+                                <div id="atualizapagamento" style="display:none">
+
+                                    <div class="col-lg-8 m-t-30 text-center">
+                                        <h5>Por favor selecione a opção de pagamento desejada:</h5>
+                                    </div>
+                                    
+                                    <div id="myCartao" class="col-md-6 cartao" style="float:left">
+                                        <div class="m-t-30">
+                                            <div class="col ">
+                                                <label class="checkbox" for="checkbox"><input type="checkbox" id="myCard" name="radio" value="Cartao de Credito" onclick="clickBoleto(),showCard()"><b>&nbsp Cartão de Crédito</b></label>
+                                            </div>
+                                        </div>
+    
+                                        <div class="m-t-10">
+                                            <img src="{{asset('assets/img/pagamentos/visa.png')}}" width="70" height="25" class="m-l-20">
+                                            <img src="{{asset('assets/img/pagamentos/master.png')}}" width="60" height="30" class="m-l-20">
+                                            <img src="{{asset('assets/img/pagamentos/amex.png')}}" width="45" height="35" class="m-l-20">
+                                            <img src="{{asset('assets/img/pagamentos/diners.png')}}" width="100" height="30" class="m-l-20">
+                                        </div>
+    
+                                        <div class="col-md-8 dadosCartao ">
+                                            <div class="col m-t-30">
+                                                <label for="nome_cartao"><b>Nome impresso no Cartão</b></label>
+                                                <input type="text" name="nome_cartao" class="form-control col-lg-12" placeholder="Nome" style="font-style: italic;" required>
+                                                <label class="m-t-10" for="numero_cartao"><b>Número do Cartão</b></label>
+                                                <input type="text" name="numero_cartao" class="form-control col-lg-12" placeholder="Número" style="font-style: italic;" required>
+    
+                                                <div class="datavalidade col-lg-6">
+                                                        <div class="row ">
+                                                            <label class="m-t-10"><b>Data de Validade</b>
+                                                                <div class="col-12  row m-t-10">
+                                                                    <input type="number" name="mes_cartao" class="form-control col-lg-5" placeholder="&nbsp MM" style="font-style: italic;" required>&nbsp
+                                                                    <input type="number" name="ano_cartao" class="form-control col-lg-5" placeholder="&nbsp AA" style="font-style: italic;" required>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                </div>
+    
+                                                <div class="ccv">
+                                                    <label class="m-t-10" for="cvv_cartao"><b>CCV</b></label>
+                                                    <input type="text" name="cvv_cartao" class="form-control col-lg-6" placeholder="CCV" style="font-style: italic;">
+                                                </div>
+                                            </div>
+                                        </div>    
+                                    </div><br>
+    
+                                    <div class="boleto" id="myBoleto">
+                                        <div class="m-t-30">
+                                            <div class="col-md-8 ">
+                                                <label class="checkbox" for="radio1"><input type="checkbox"  id="myBol" name="radio" value="Boleto Bancario" onclick="clickCartao(),showBol()"><b>&nbsp Boleto Bancário</b></label>
+                                            </div>
+                                        </div>
+    
+                                        <div class=" m-t-10">
+                                            <img src="{{asset('assets/img/pagamentos/boleto.png')}}" width="100" height="30" class="m-l-20">
+                                            <label ><a href="boleto.php">&nbsp  Gerar Boleto</a></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                            <button type="submit" class="btn btn-success" style="width: 160px;">Salvar</button>
+                                        </div>
+                                        <div class="clearfix"></div><br><br>
+                                </div><br>
                             </div>
-                        </form>
-                     </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        <br> <br> <br> 
     </main>
     @stop

@@ -277,12 +277,12 @@ Route::get('pagamentos/financeiro/{user}', 'PagamentosController@financeiro');
 
 Route::get('pagamentos/termos', 'PagamentosController@termos');
 
-// --------------------------------------------------------- //
-// -- FINANCEIRO -- //
-// --------------------------------------------------------- //
+Route::get('pagamentos/financeiro/renovacao_automatica/{id}', 'PagamentosController@renovacao');
 
-Route::post('financeiro/editar/{id}', 'PagamentosController@editarPlano');
+Route::post('pagamentos/financeiro/alteraemail/', 'PagamentosController@alteraemail');
+
+Route::post('pagamentos/financeiro/editar/{id}', 'PagamentosController@editarPlano');
 
 Route::get('pagamentos/financeiro/cancelamento/{id}', 'PagamentosController@cancelamento');
 
-Route::post('financeiro/excluir/{id}', 'PagamentosController@deletePlano');
+Route::get('pagamentos/financeiro/excluir/{id}', 'PagamentosController@deletePlano');

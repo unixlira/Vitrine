@@ -453,7 +453,7 @@ z-index: 999999">
         });
     }
     */
-//Inserido por José
+//PAGAMENTOS CHECKBOX
     $(document).ready(function(){
         $('#checknewemail').click(function(){
             $('#inputEmail').toggle();
@@ -484,7 +484,7 @@ z-index: 999999">
         if (checkBox.checked == true){
             text.style.display = "block";
         } else {
-        text.style.display = "none";
+            text.style.display = "none";
         }
     }
 
@@ -494,7 +494,7 @@ z-index: 999999">
         if (checkBox.checked == true){
             text.style.display = "block";
         } else {
-        text.style.display = "none";
+            text.style.display = "none";
         }
     }  
 
@@ -527,7 +527,32 @@ z-index: 999999">
             $('#cupom').toggle();
         });
     });
-//
+//FINANCEIRO 
+
+    $('a').click(function() {
+        $(this).find('i').toggleClass('fa fa-check text-success fa fa-close text-dark');
+    });
+
+    $(document).ready(function(){
+        $('#editar').click(function(){
+            $('#atualizapagamento').toggle();
+        });
+    });
+
+        function showPayfor() {
+        var editar = document.getElementById("editar");
+        var atualizapagamento = document.getElementById("atualizapagamento");
+        if (editar.click == true){
+            atualizapagamento.style.display = "block";
+        } else {
+            atualizapagamento.style.display = "none";
+        }
+    }
+
+
+
+    
+
 </script>
 <!-- end of global scripts-->
 <!-- page level js -->

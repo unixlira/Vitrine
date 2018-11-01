@@ -37,12 +37,35 @@ class PagamentosController  extends Controller
         
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
         $planos = Pedidos::where('id_usuario', '=', $user->id)->get();
-        $acao = "pagamentos/updateFinanceiro";
+        $acao = "/pagamentos/financeiro/renovacao_automatica/";
+        $alteraemail = "/pagamentos/financeiro/alteraemail/";
 
-        return view('pagamentos.financeiro',compact('request','user','planos','acao'));
+        return view('pagamentos.financeiro',compact('request', 'user', 'planos', 'acao', 'alteraemail'));
     }
 
+    public function renovacao($id){
+
+        $user = Usuarios::find(\Request::session()->get('id_usuario'));
+        $plano = Pedidos::find($id);
+        $plano->renovacao_auto = ($plano->renovacao_auto == 0)? 1 : 0;        
+        $plano->save();
+
+        return redirect('/pagamentos/financeiro/'.$user->id);
+
+    }
+
+    public function alteraemail(Request $request){
+
+        $user = Usuarios::find(\Request::session()->get('id_usuario'));
+        Pedidos::where('id_usuario', $user->id)->update(array('email_fatura' => $request->email_fatura, 'updated_at' => date("Y-m-d H:i:s")));
+
+        return redirect('/pagamentos/financeiro/'.$user->id);
+    }
+
+
+
     public function formapagamento(Request $request, $id){
+
         $titulo = "Forma de Pagamento";
         $acao = "pagamentos/salvarPedido";
         $mensagem = 'Pedido efetuado com sucesso.';
@@ -108,10 +131,12 @@ class PagamentosController  extends Controller
 
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
 
-        $plano = Pedidos::findOrFail($id);
+        $plano = Pedidos::find($id);
         $plano->delete();
 
         return redirect('/pagamentos/financeiro/'.$user->id);
     }
+
+
 		
 }
