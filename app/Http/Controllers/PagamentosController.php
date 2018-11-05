@@ -38,9 +38,10 @@ class PagamentosController  extends Controller
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
         $planos = Pedidos::where('id_usuario', '=', $user->id)->get();
         $acao = "/pagamentos/financeiro/renovacao_automatica/";
+        $editPagamento = "pagamentos/financeiro/editar";
         $alteraemail = "/pagamentos/financeiro/alteraemail/";
 
-        return view('pagamentos.financeiro',compact('request', 'user', 'planos', 'acao', 'alteraemail'));
+        return view('pagamentos.financeiro',compact('request', 'user', 'planos', 'acao', 'alteraemail', 'editPagamento'));
     }
 
     public function renovacao($id){
@@ -119,12 +120,25 @@ class PagamentosController  extends Controller
 
     }
     
-    public function editarPlano($id){
+    public function editarPlano(Request $request, $id){
         
-        $usuario = Usuarios::find($id);
-        $financeiro = array();
-        $financeiro = new Pedidos;
+        $user = Usuarios::find(\Request::session()->get('id_usuario'));
+        $plano = Pedidos::find($id);
+        Pedidos::where('id_usuario', $user->id)->update(array('email_fatura' => $request->email_fatura, 'updated_at' => date("Y-m-d H:i:s")));
 
+        return redirect('/pagamentos/financeiro/'.$user->id);
+        
+
+    }
+
+    public function showPlano()
+    {
+        $user = Usuarios::find(\Request::session()->get('id_usuario'));
+        $planos = Pedidos::where('id_usuario', '=', $user->id)->get();
+        
+        return json_encode($planos);
+        
+        
     }
 
     public function deletePlano(Request $request, $id){

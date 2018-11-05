@@ -197,9 +197,26 @@
                             </div>
 
                             <div class=text-right>
-                                <button type="submit" class="btn btn-success">Finalizar Pedido</button>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalCentralizado">Finalizar Pedido</button>
+                            </div>                           
+                                
+                            <!-- Modal -->
+                            <div class="modal fade" id="ModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <img src="{{ asset('assets/img/logo_vitrine.png') }}" class="admin_img">
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <p aria-hidden="true">Plano inserido com sucesso.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-success">Enviar</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            
+
                         </form>
                      </div>
                 </div>

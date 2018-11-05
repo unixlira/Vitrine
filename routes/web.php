@@ -281,8 +281,8 @@ Route::get('pagamentos/financeiro/renovacao_automatica/{id}', 'PagamentosControl
 
 Route::post('pagamentos/financeiro/alteraemail/', 'PagamentosController@alteraemail');
 
-Route::post('pagamentos/financeiro/editar/{id}', 'PagamentosController@editarPlano');
+Route::get('pagamentos/financeiro/editar/{id}', 'PagamentosController@editarPlano');
+
+Route::get('pagamentos/financeiro/plano/{id}', 'PagamentosController@showPlano');
 
 Route::get('pagamentos/financeiro/cancelamento/{id}', 'PagamentosController@cancelamento');
-
-Route::get('pagamentos/financeiro/excluir/{id}', 'PagamentosController@deletePlano');

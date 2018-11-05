@@ -533,23 +533,49 @@ z-index: 999999">
         $(this).find('i').toggleClass('fa fa-check text-success fa fa-close text-dark');
     });
 
-    $(document).ready(function(){
-        $('#editar').click(function(){
-            $('#atualizapagamento').toggle();
-        });
-    });
 
-        function showPayfor() {
-        var editar = document.getElementById("editar");
-        var atualizapagamento = document.getElementById("atualizapagamento");
-        if (editar.click == true){
-            atualizapagamento.style.display = "block";
-        } else {
-            atualizapagamento.style.display = "none";
-        }
+  
+    function showPay(div) {
+        
+        $('#nome_cartao').val('');
+        $('#numero_cartao').val('');
+        $('#ano_cartao').val('');
+        $('#cvv_cartao').val('');
+        $('#Pagamento').toggle();
     }
+    
+    
 
+    //Modal 
+        $(function(){
+            
+            $('#modalRenovacaoAtivar').on('show.bs.modal', function(){
+                var myModal = $(this);
+                clearTimeout(myModal.data('hideInterval'));
+                myModal.data('hideInterval', setTimeout(function(){
+                    myModal.modal('hide');
+                }, 3000));
+            });
+        });
 
+        $(function(){
+            $('#modalRenovacaoCancel').on('show.bs.modal', function(){
+                var myModal = $(this);
+                clearTimeout(myModal.data('hideInterval'));
+                myModal.data('hideInterval', setTimeout(function(){
+                    myModal.modal('hide');
+                }, 3000));
+            });
+        });
+
+    //Show Forma de pagamento por id de plano
+
+    function editar(id){
+        $.getJSON('pagamentos/financeiro/plano/' + id, function(data){
+            console.log(data);
+        });
+    }
+    
 
     
 
