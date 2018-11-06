@@ -100,7 +100,7 @@ class PagamentosController  extends Controller
         }
         $plano->nome_plano = $request->nome_plano;             
         $plano->preco_plano = $request->preco_plano;             
-        $plano->forma_pgto = $request->radio == 'Cartao de Credito' ? 'Cartao de Credito' : 'Boleto Bancario' ;
+        $plano->forma_pgto = $request->radio == '1' ? '1' : '2' ;
 		$plano->nome_cartao = $request->nome_cartao;
 		$plano->numero_cartao = $request->numero_cartao;
 		$plano->mes_cartao = $request->mes_cartao;
@@ -136,7 +136,7 @@ class PagamentosController  extends Controller
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
         $planos = Pedidos::where('id_usuario', '=', $user->id)->get();
         
-        return json_encode($planos);
+        return response($planos);
         
         
     }
@@ -151,6 +151,6 @@ class PagamentosController  extends Controller
         return redirect('/pagamentos/financeiro/'.$user->id);
     }
 
-
+  
 		
 }

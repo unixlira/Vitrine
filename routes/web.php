@@ -286,3 +286,4 @@ Route::get('pagamentos/financeiro/editar/{id}', 'PagamentosController@editarPlan
 Route::get('pagamentos/financeiro/plano/{id}', 'PagamentosController@showPlano');
 
 Route::get('pagamentos/financeiro/cancelamento/{id}', 'PagamentosController@cancelamento');
+

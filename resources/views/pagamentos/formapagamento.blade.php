@@ -101,7 +101,7 @@
                                 <div id="myCartao" class="cartao">
                                     <div class="m-t-30">
                                         <div class="col ">
-                                            <label class="checkbox" for="checkbox"><input type="checkbox" id="myCard" name="radio" value="Cartao de Credito" onclick="clickBoleto(),showCard()"><b>&nbsp Cartão de Crédito</b></label>
+                                            <label class="checkbox" for="checkbox"><input type="checkbox" id="myCard" name="radio" value="1" onclick="clickBoleto(),showCard()"><b>&nbsp Cartão de Crédito</b></label>
                                         </div>
                                     </div>
 
@@ -141,7 +141,7 @@
                                 <div class="boleto" id="myBoleto">
                                     <div class="m-t-30">
                                         <div class="col ">
-                                            <label class="checkbox" for="radio1"><input type="checkbox"  id="myBol" name="radio" value="Boleto Bancario" onclick="clickCartao(),showBol()"><b>&nbsp Boleto Bancário</b></label>
+                                            <label class="checkbox" for="radio1"><input type="checkbox"  id="myBol" name="radio" value="2" onclick="clickCartao(),showBol()"><b>&nbsp Boleto Bancário</b></label>
                                         </div>
                                     </div>
 
@@ -211,7 +211,7 @@
                                             <p aria-hidden="true">Plano inserido com sucesso.</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-success">Enviar</button>
+                                            <button type="submit" class="btn btn-success">Visualizar o Plano</button>
                                         </div>
                                     </div>
                                 </div>

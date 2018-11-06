@@ -535,12 +535,7 @@ z-index: 999999">
 
 
   
-    function showPay(div) {
-        
-        $('#nome_cartao').val('');
-        $('#numero_cartao').val('');
-        $('#ano_cartao').val('');
-        $('#cvv_cartao').val('');
+    function showPay() {
         $('#Pagamento').toggle();
     }
     
@@ -570,11 +565,21 @@ z-index: 999999">
 
     //Show Forma de pagamento por id de plano
 
+    
     function editar(id){
         $.getJSON('pagamentos/financeiro/plano/' + id, function(data){
             console.log(data);
         });
     }
+
+
+    //Ajax Pagamentos
+
+    $('#read-data').on('click',function(id){
+        $.get('plano/' +id, function(data){
+            console.log(data);
+        });
+    })
     
 
     
