@@ -33,15 +33,15 @@ class PagamentosController  extends Controller
         return view('pagamentos.planos',compact('request','planos'));
     }
 
-    public function financeiro(Request $request, $user){
+    public function financeiro(){
         
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
         $planos = Pedidos::where('id_usuario', '=', $user->id)->get();
         $acao = "/pagamentos/financeiro/renovacao_automatica/";
-        $editPagamento = "pagamentos/financeiro/editar";
+        $editPagamento = "pagamentos/financeiro/editar/";
         $alteraemail = "/pagamentos/financeiro/alteraemail/";
 
-        return view('pagamentos.financeiro',compact('request', 'user', 'planos', 'acao', 'alteraemail', 'editPagamento'));
+        return view('pagamentos.financeiro',compact('user','planos', 'acao', 'alteraemail', 'editPagamento'));
     }
 
     public function renovacao($id){
@@ -51,7 +51,7 @@ class PagamentosController  extends Controller
         $plano->renovacao_auto = ($plano->renovacao_auto == 0)? 1 : 0;        
         $plano->save();
 
-        return redirect('/pagamentos/financeiro/'.$user->id);
+        return redirect('/pagamentos/financeiro');
 
     }
 
@@ -60,7 +60,7 @@ class PagamentosController  extends Controller
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
         Pedidos::where('id_usuario', $user->id)->update(array('email_fatura' => $request->email_fatura, 'updated_at' => date("Y-m-d H:i:s")));
 
-        return redirect('/pagamentos/financeiro/'.$user->id);
+        return redirect('/pagamentos/financeiro');
     }
 
 
@@ -100,7 +100,7 @@ class PagamentosController  extends Controller
         }
         $plano->nome_plano = $request->nome_plano;             
         $plano->preco_plano = $request->preco_plano;             
-        $plano->forma_pgto = $request->radio == 'Cartao de Credito' ? 'Cartao de Credito' : 'Boleto Bancario' ;
+        $plano->forma_pgto = $request->radio == 1 ? 1 : 2 ;
 		$plano->nome_cartao = $request->nome_cartao;
 		$plano->numero_cartao = $request->numero_cartao;
 		$plano->mes_cartao = $request->mes_cartao;
@@ -108,49 +108,36 @@ class PagamentosController  extends Controller
         $plano->cvv_cartao = $request->cvv_cartao;
         $plano->save(); //salvando o insert
 
-        return redirect('/pagamentos/financeiro/'.$user->id);
+        return redirect('/pagamentos/financeiro/');
         
     }
 
-    public function cancelamento(Request $request, $id){
-
-        $user = Usuarios::find(\Request::session()->get('id_usuario'));
-        $planos = Pedidos::where('id_usuario', '=', $user->id)->get();
-        return view('pagamentos.cancelamento', compact('user','request', 'planos'));
-
-    }
     
-    public function editarPlano(Request $request, $id){
+    public function editarPlano(Request $request){        
         
-        $user = Usuarios::find(\Request::session()->get('id_usuario'));
-        $plano = Pedidos::find($id);
-        Pedidos::where('id_usuario', $user->id)->update(array('email_fatura' => $request->email_fatura, 'updated_at' => date("Y-m-d H:i:s")));
-
-        return redirect('/pagamentos/financeiro/'.$user->id);
         
-
+        Pedidos::where('id',$request->id_pedido)->update(array('forma_pgto' => $request->radio == 1 ? 1 : 2 , 'updated_at' => date("Y-m-d H:i:s")));
+        
+        return redirect('/pagamentos/financeiro');
     }
 
-    public function showPlano()
+    public function showPlano($id_plano)
     {
-        $user = Usuarios::find(\Request::session()->get('id_usuario'));
-        $planos = Pedidos::where('id_usuario', '=', $user->id)->get();
+        $planos = Pedidos::find($id_plano);
         
-        return json_encode($planos);
-        
-        
+        return response($planos);   
     }
 
-    public function deletePlano(Request $request, $id){
+    public function excluir(Request $request, $id){
 
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
 
         $plano = Pedidos::find($id);
         $plano->delete();
 
-        return redirect('/pagamentos/financeiro/'.$user->id);
+        return redirect('/pagamentos/financeiro');
     }
 
-
+  
 		
 }
