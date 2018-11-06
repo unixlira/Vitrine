@@ -37,8 +37,7 @@
                         <div>
                             <h2>Meu Plano</h2><br>
                         </div>
-                    
-                        
+
                         <div class="m-t-30">
                             <h4>ADESÃO</h4>
                             <hr>
@@ -93,18 +92,18 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                     <button type="button" class="btn btn-light" data-dismiss="modal">Voltar</button>
-                                                    <a href={{ "excluir/" . $plano->id }} ><button type="submit" class="btn btn-primary">Cancelar</button></a>
+                                                    <a href={{ "financeiro/cancelamento/" . $plano->id }} ><button type="submit" class="btn btn-primary">Cancelar</button></a>
                                                     </div>
                                                 </div>
                                                 </div>
                                             </div>
-                                        @endforeach                                    
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <br>
-                                                
+
                         <div class="contatofinanceiro">
                             <div class="m-t-30">
                                 <h4>CONTATO</h4>
@@ -158,100 +157,101 @@
                                                         @case(2)
                                                             <th class="text-center">Boleto Bancário</th>
                                                             @break
-                                                        @default                                                            
+                                                        @default
                                                     @endswitch
                                                     <th class="text-center">
                                                         <button id="read-data" class="fa fa-pencil text-warning" title="Click para editar a Forma de Pagamento" 
                                                         style="
                                                         background-color: transparent;
                                                         border-color: transparent;
-                                                        box-shadow: none;" onclick="showPay()" role="button"></button>
+                                                        box-shadow: none;" onclick="readFormaPagamento({{ $plano->id }})" role="button" value="{{ $plano->id }}"></button>
                                                     </th>
                                                 </tr>
-                                            @endforeach                                    
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
-                            @foreach($planos as $plano)
-                                <form action="{{ URL::to($editPagamento) }}" method="post" novalidate id="formEditPlano">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <input type="hidden" name="idPlano" value="{{$plano->id}}">                              
-                                    
-                                    <div id="Pagamento" style="display:none">
+                            <form action="{{ URL::to($editPagamento) }}" method="post" novalidate id="formEditPlano">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="id_pedido" value="{{ $planos[0]->id }}">  
 
-                                        
-                                        
-                                        <div class="col-lg-8 m-t-30">
-                                            <h5>Por favor selecione a opção de pagamento desejada:</h5>
+                                <div id="Pagamento" style="display:none">
+                                
+                                    <div class="col-lg-8 m-t-30">
+                                        <h5>Por favor selecione a opção de pagamento desejada:</h5>
+                                    </div>
+                                
+                                    <div id="myCartao" class="col-md-6 cartao" style="float:left">
+                                        <div class="m-t-30">
+                                            <div class="col ">
+                                                <label class="checkbox" for="checkbox"><input type="checkbox" id="myCard" name="radio"  value="1" onclick="clickBoleto(),showCard()" ><b>&nbsp Cartão de Crédito</b></label>
+                                            </div>
                                         </div>
                                         
-                                                <div id="myCartao" class="col-md-6 cartao" style="float:left">
-                                                    <div class="m-t-30">
-                                                        <div class="col ">
-                                                        <label class="checkbox" for="checkbox"><input type="checkbox" id="myCard" name="radio" value="Cartao de Credito" onclick="clickBoleto(),showCard()" ><b>&nbsp Cartão de Crédito</b></label>
-                                                        </div>
-                                                    </div>
-                
-                                                    <div class="m-t-10">
-                                                        <img src="{{asset('assets/img/pagamentos/visa.png')}}" width="70" height="25" class="m-l-20">
-                                                        <img src="{{asset('assets/img/pagamentos/master.png')}}" width="60" height="30" class="m-l-20">
-                                                        <img src="{{asset('assets/img/pagamentos/amex.png')}}" width="45" height="35" class="m-l-20">
-                                                        <img src="{{asset('assets/img/pagamentos/diners.png')}}" width="100" height="30" class="m-l-20">
-                                                    </div>
-                
-                                                    <div class="col-md-8 dadosCartao ">
-                                                        <div class="col m-t-30">
-                                                            <label for="nome_cartao"><b>Nome impresso no Cartão</b></label>
-                                                            <input type="text" name="nome_cartao" id="nome_cartao" class="form-control col-lg-12" style="font-style: italic;" value="{{ $plano->nome_cartao }}">
-
-                                                            <label class="m-t-10" for="numero_cartao"><b>Número do Cartão</b></label>
-                                                            <input type="text" name="numero_cartao" id="numero_cartao" class="form-control col-lg-12" value="{{ $plano->numero_cartao }}" style="font-style: italic;" required>
-                
-                                                            <div class="datavalidade col-lg-6">
-                                                                    <div class="row ">
-                                                                        <label class="m-t-10"><b>Data de Validade</b>
-                                                                            <div class="col-12  row m-t-10">
-                                                                                <input type="number" name="mes_cartao" class="form-control col-lg-5" value="{{ $plano->mes_cartao }}" style="font-style: italic;" required>&nbsp
-                                                                                <input type="number" name="ano_cartao" id="ano_cartao" class="form-control col-lg-5" value="{{ $plano->ano_cartao }}" style="font-style: italic;" required>
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                            </div>
-                
-                                                            <div class="ccv">
-                                                                <label class="m-t-10" for="cvv_cartao"><b>CCV</b></label>
-                                                                <input type="text" name="cvv_cartao" id="cvv_cartao" class="form-control col-lg-6" value="{{ $plano->cvv_cartao }}" style="font-style: italic;">
-                                                            </div>
-                                                        </div>
-                                                    </div>    
-                                                </div><br>
-                        
+                                        <div class="m-t-10">
+                                            <img src="{{asset('assets/img/pagamentos/visa.png')}}" width="70" height="25" class="m-l-20">
+                                            <img src="{{asset('assets/img/pagamentos/master.png')}}" width="60" height="30" class="m-l-20">
+                                            <img src="{{asset('assets/img/pagamentos/amex.png')}}" width="45" height="35" class="m-l-20">
+                                            <img src="{{asset('assets/img/pagamentos/diners.png')}}" width="100" height="30" class="m-l-20">
+                                        </div>
                                         
-                                                <div class="boleto" id="myBoleto">
-                                                    <div class="m-t-30">
-                                                        <div class="col-md-8 ">
-                                                            <label class="checkbox" for="radio1"><input type="checkbox"  id="myBol" name="radio" value="Boleto Bancario" onclick="clickCartao(),showBol()" ><b>&nbsp Boleto Bancário</b></label>
+                                        <div class="col-md-8 dadosCartao ">
+                                            <div class="col m-t-30">
+                                                <label for="nome_cartao"><b>Nome impresso no Cartão</b></label>
+                                                <input type="text" name="nome_cartao" id="nome_cartao" class="form-control col-lg-12" style="font-style: italic;">
+
+                                                <label class="m-t-10" for="numero_cartao"><b>Número do Cartão</b></label>
+                                                <input type="text" name="numero_cartao" id="numero_cartao" class="form-control col-lg-12" style="font-style: italic;" required>
+    
+                                                <div class="datavalidade col-lg-6">
+                                                        <div class="row ">
+                                                            <label class="m-t-10"><b>Data de Validade</b>
+                                                                <div class="col-12  row m-t-10">
+                                                                    <input type="text" name="mes_cartao" id="mes_cartao"class="form-control col-lg-5" style="font-style: italic;" required>&nbsp
+                                                                    <input type="text" name="ano_cartao" id="ano_cartao" class="form-control col-lg-5" style="font-style: italic;" required>
+                                                                </div>
+                                                            </label>
                                                         </div>
-                                                    </div>
-                
-                                                    <div class=" m-t-10">
-                                                        <img src="{{asset('assets/img/pagamentos/boleto.png')}}" width="100" height="30" class="m-l-20">
-                                                        <label ><a href="boleto.php">&nbsp  Gerar Boleto</a></label>
-                                                    </div>
+                                                </div>
+    
+                                                <div class="ccv">
+                                                    <label class="m-t-10" for="cvv_cartao"><b>CCV</b></label>
+                                                    <input type="text" name="cvv_cartao" id="cvv_cartao" class="form-control col-lg-6" style="font-style: italic;">
                                                 </div>
                                             </div>
-                                        
-                                    </form>
-                                @endforeach
-                            <div class="clearfix"></div>
-                                    
-                            <div class="col m-t-15">
-                                <button type="submit" class="btn btn-success" style="width: 160px;">Salvar</button>
-                            </div>                            
-                
-                    <div class="clearfix"></div><br><br>
+                                        </div>    
+                                    </div><br>
+            
+                            
+                                    <div class="boleto" id="myBoleto">
+                                        <div class="m-t-30">
+                                            <div class="col-md-8 ">
+                                            <label class="checkbox" for="radio1"><input type="checkbox"  id="myBol" name="radio" value="2" onclick="clickCartao(),showBol()" ><b>&nbsp Boleto Bancário</b></label>
+                                            </div>
+                                        </div>
+    
+                                        <div class=" m-t-10">
+                                            <img src="{{asset('assets/img/pagamentos/boleto.png')}}" width="100" height="30" class="m-l-20">
+                                            <label ><a href="boleto.php">&nbsp  Gerar Boleto</a></label>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col m-t-15">
+                                        <button type="submit" class="btn btn-success" style="width: 160px;">Salvar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col m-t-5">
+                            <a href="javascript:window.history.go(-1)">
+                                <button type="button" class="btn btn-dark mt-3" style="width: 160px;">Voltar</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>

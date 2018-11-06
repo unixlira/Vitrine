@@ -278,7 +278,7 @@ z-index: 999999">
                                     </a>
                                 </li>
                                 <li {!! (($link == 'planos') || ($link == 'financeiro') || ($link == 'pagamentos') ? 'class="active"':"") !!}>
-                                    <a href="{{ URL::to('/pagamentos/financeiro/=') . Request::session()->get('id_usuario')  }}">
+                                    <a href="{{ URL::to('/pagamentos/financeiro/')}}">
                                         <i class="fa fa-angle-right"></i>
                                         &nbsp; Financeiro
                                     </a>
@@ -535,13 +535,10 @@ z-index: 999999">
 
 
   
-    function showPay() {
-        $('#Pagamento').toggle();
-    }
     
     
 
-    //Modal 
+//Modal 
         $(function(){
             
             $('#modalRenovacaoAtivar').on('show.bs.modal', function(){
@@ -563,12 +560,17 @@ z-index: 999999">
             });
         });
 
-    //Show Forma de pagamento por id de plano
-
     
-    function editar(id){
-        $.getJSON('pagamentos/financeiro/plano/' + id, function(data){
-            console.log(data);
+
+//Ajax Pagamentos
+    function readFormaPagamento(id){
+        $('#Pagamento').fadeToggle();
+        $.get('/pagamentos/financeiro/plano/' +id, function(data){
+            $('#nome_cartao').val (data.nome_cartao);
+            $('#numero_cartao').val (data.numero_cartao);
+            $('#mes_cartao').val (data.mes_cartao);
+            $('#ano_cartao').val (data.ano_cartao);
+            $('#cvv_cartao').val (data.cvv_cartao);
         });
     }
 
@@ -580,6 +582,8 @@ z-index: 999999">
             console.log(data);
         });
     })
+    
+
     
 
     

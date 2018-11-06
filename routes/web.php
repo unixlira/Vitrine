@@ -273,7 +273,7 @@ Route::get('pagamentos/forma_pagamento/{id}', 'PagamentosController@formapagamen
 
 Route::post('pagamentos/salvarPedido', 'PagamentosController@salvarPedido');
 
-Route::get('pagamentos/financeiro/{user}', 'PagamentosController@financeiro');
+Route::get('pagamentos/financeiro', 'PagamentosController@financeiro');
 
 Route::get('pagamentos/termos', 'PagamentosController@termos');
 
@@ -281,9 +281,9 @@ Route::get('pagamentos/financeiro/renovacao_automatica/{id}', 'PagamentosControl
 
 Route::post('pagamentos/financeiro/alteraemail/', 'PagamentosController@alteraemail');
 
-Route::get('pagamentos/financeiro/editar/{id}', 'PagamentosController@editarPlano');
+Route::post('pagamentos/financeiro/editar/', 'PagamentosController@editarPlano');
 
 Route::get('pagamentos/financeiro/plano/{id}', 'PagamentosController@showPlano');
 
-Route::get('pagamentos/financeiro/cancelamento/{id}', 'PagamentosController@cancelamento');
+Route::get('pagamentos/financeiro/cancelamento/{id}', 'PagamentosController@excluir');
 
