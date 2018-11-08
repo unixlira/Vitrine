@@ -15,6 +15,21 @@
     <link type="text/css" rel="stylesheet" href="{{asset('assets/css/chat.css')}}"/>
     <link type="text/css" rel="stylesheet" href="#" id="skin_change"/>
     <!-- end of global styles-->
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/c3/css/c3.min.css')}}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/toastr/css/toastr.min.css')}}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/switchery/css/switchery.min.css')}}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/css/pages/new_dashboard.css')}}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/css/style.css')}}"/>
+    <link href="{{asset('assets/css/pages/flot_charts.css')}}" rel="stylesheet" type="text/css">
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/select2/css/select2.min.css')}}" />
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/datatables/css/scroller.bootstrap.min.css')}}" />
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/datatables/css/colReorder.bootstrap.min.css')}}" />
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/datatables/css/dataTables.bootstrap.min.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/responsive.dataTables.css')}}">
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/css/pages/dataTables.bootstrap.css')}}" />
+    <!--End of plugin styles-->
+    <!--Page level styles-->
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/css/pages/tables.css')}}"/>
     @yield('header_styles')
 </head>
 
@@ -327,6 +342,25 @@ z-index: 999999">
 <!-- global scripts-->
 <script type="text/javascript" src="{{asset('assets/js/components.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/custom.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/select2/js/select2.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/datatables/js/jquery.dataTables.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/pluginjs/dataTables.tableTools.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.colReorder.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.buttons.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.responsive.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.rowReorder.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.colVis.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.html5.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.print.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.scroller.min.js')}}"></script>
+
+
+<!--End of plugin scripts-->
+<!--Page level scripts-->
+<script type="text/javascript" src="{{asset('assets/js/pages/users.js')}}"></script>
+<!-- end page level scripts -->
 <script type="text/javascript">
     /*
     $(document).ready(function(){
@@ -574,8 +608,55 @@ z-index: 999999">
         });
     }
     
+//DataTable Financeiro
+    $(document).ready(function() {
 
-    
+        var table = $('#planos-table').DataTable({
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            "ajax": "{{ url('datatable/getplanos') }}",
+            "columns": [
+                {
+                    "className":      'details-control',
+                    "orderable":      false,
+                    "searchable":     false,
+                    "data":           null,
+                    "defaultContent": '<span class="row-details row-details-close"></span>'
+                },
+                {data: 'nome_plano'},
+                {data: 'created_at'},
+                {data: 'preco_plano'},
+                {data: 'created_at'},
+                {data: 'id','render':function( data, type, full)
+                    {
+                        if( full['renovacao_auto'] == 1){
+                            return  '<th class="text-center"><a href="financeiro/renovacao_automatica/'+ data +'"><i class="fa fa-check text-success" title="ATIVADO: click para desativar renovação automática"></i><a></th>';
+                        }else{
+                            return  '<th class="text-center"><a href="financeiro/renovacao_automatica/'+ data +'"><i class="fa fa-close text-dark" title="DESATIVADO: click para ativar renovação automática"></i></a></th>';
+                        }
+                    }
+                
+                },
+                {data: 'id', "render": function ( data, type, row, meta )
+                    {
+                        return '<a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="" href="financeiro/cancelamento/'+ data +'" data-original-title="Bloquear"><i class="fa fa-ban text-danger"></i></a>';
+                        
+                    }
+                }
+            ]
+        });
+        
+        $('#planos-table tbody').on('click', 'a', function () {       
+            $(this).find('i').toggleClass('fa fa-check text-success fa fa-close text-dark');
+        } );
+
+        
+        
+       
+         
+        
+    });
 
     
 

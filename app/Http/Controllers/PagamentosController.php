@@ -37,15 +37,16 @@ class PagamentosController  extends Controller
         
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
         $planos = Pedidos::where('id_usuario', '=', $user->id)->get();
-        $acao = "/pagamentos/financeiro/renovacao_automatica/";
-        $editPagamento = "pagamentos/financeiro/editar/";
+        $acao = "/pagamentos/financeiro/renovacao_automatica/".$planos[0]->id;
+        $editPagamento = "pagamentos/financeiro/editar/".$planos[0]->id;
         $alteraemail = "/pagamentos/financeiro/alteraemail/";
 
         return view('pagamentos.financeiro',compact('user','planos', 'acao', 'alteraemail', 'editPagamento'));
     }
 
-    public function renovacao($id){
+    public function renovacao(Request $request,$id){
 
+        
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
         $plano = Pedidos::find($id);
         $plano->renovacao_auto = ($plano->renovacao_auto == 0)? 1 : 0;        
@@ -59,6 +60,7 @@ class PagamentosController  extends Controller
 
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
         Pedidos::where('id_usuario', $user->id)->update(array('email_fatura' => $request->email_fatura, 'updated_at' => date("Y-m-d H:i:s")));
+        Usuarios::where('id', $user->id)->update(array('telefone' => $request->telefone, 'updated_at' => date("Y-m-d H:i:s")));
 
         return redirect('/pagamentos/financeiro');
     }
@@ -113,11 +115,32 @@ class PagamentosController  extends Controller
     }
 
     
-    public function editarPlano(Request $request){        
+    public function editarPagamento(Request $request, $id){        
         
-        
-        Pedidos::where('id',$request->id_pedido)->update(array('forma_pgto' => $request->radio == 1 ? 1 : 2 , 'updated_at' => date("Y-m-d H:i:s")));
-        
+        $plano = Pedidos::find($id);
+
+        if($request->radio == 2){
+
+            $plano->forma_pgto = $request->radio == 1 ? 1 : 2 ;
+            $plano->nome_cartao = null;
+            $plano->numero_cartao = null;
+            $plano->mes_cartao = null;
+            $plano->ano_cartao = null;
+            $plano->cvv_cartao = null;
+            $plano->save();
+
+        }else{
+
+            $plano->forma_pgto = $request->radio == 1 ? 1 : 2 ;
+            $plano->nome_cartao = $request->nome_cartao;
+            $plano->numero_cartao = $request->numero_cartao;
+            $plano->mes_cartao = $request->mes_cartao;
+            $plano->ano_cartao = $request->ano_cartao;
+            $plano->cvv_cartao = $request->cvv_cartao;
+            $plano->save();
+
+        }
+
         return redirect('/pagamentos/financeiro');
     }
 
@@ -128,16 +151,22 @@ class PagamentosController  extends Controller
         return response($planos);   
     }
 
-    public function excluir(Request $request, $id){
+    public function excluir($id){
 
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
-
         $plano = Pedidos::find($id);
         $plano->delete();
 
         return redirect('/pagamentos/financeiro');
     }
 
+    public function getPlanos()
+    {
+        $user = Usuarios::find(\Request::session()->get('id_usuario'));
+        $planos = Pedidos::where('id_usuario', '=', $user->id)->get();     
+        
+        return Datatables::of($planos)->make(true);
+    }
   
 		
 }

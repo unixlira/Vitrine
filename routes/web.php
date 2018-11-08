@@ -281,9 +281,11 @@ Route::get('pagamentos/financeiro/renovacao_automatica/{id}', 'PagamentosControl
 
 Route::post('pagamentos/financeiro/alteraemail/', 'PagamentosController@alteraemail');
 
-Route::post('pagamentos/financeiro/editar/', 'PagamentosController@editarPlano');
+Route::post('pagamentos/financeiro/editar/{id}', 'PagamentosController@editarPagamento');
 
 Route::get('pagamentos/financeiro/plano/{id}', 'PagamentosController@showPlano');
 
 Route::get('pagamentos/financeiro/cancelamento/{id}', 'PagamentosController@excluir');
+
+Route::get('datatable/getplanos', ['as'=>'datatable.getplanos','uses'=>'PagamentosController@getPlanos']);
 

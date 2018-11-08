@@ -123,8 +123,8 @@
                                                     <div class="row ">
                                                         <label class="m-t-10"><b>Data de Validade</b>
                                                             <div class="col-12  row m-t-10">
-                                                                <input type="number" name="mes_cartao" class="form-control col-lg-5" placeholder="&nbsp MM" style="font-style: italic;" required>&nbsp
-                                                                <input type="number" name="ano_cartao" class="form-control col-lg-5" placeholder="&nbsp AA" style="font-style: italic;" required>
+                                                                <input type="text" name="mes_cartao" class="form-control col-lg-5" placeholder="&nbsp MM" style="font-style: italic;" required>&nbsp
+                                                                <input type="text" name="ano_cartao" class="form-control col-lg-5" placeholder="&nbsp AA" style="font-style: italic;" required>
                                                             </div>
                                                         </label>
                                                     </div>
@@ -208,10 +208,10 @@
                                             <img src="{{ asset('assets/img/logo_vitrine.png') }}" class="admin_img">
                                         </div>
                                         <div class="modal-body text-center">
-                                            <p aria-hidden="true">Plano inserido com sucesso.</p>
+                                            <p aria-hidden="true">Pedido concluído com sucesso.</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-success">Visualizar o Plano</button>
+                                            <button type="submit" class="btn btn-success">Continuar</button>
                                         </div>
                                     </div>
                                 </div>

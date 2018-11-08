@@ -107,6 +107,7 @@ class LoginController extends Controller
                     $request->session() ->put('id_loja',$result[0]->id_loja);
                     $request->session() ->put('nome_loja',$result[0]->nome_loja);
                     $request->session() ->put('email',$result[0]->email);
+                    $request->session() ->put('telefone',$result[0]->telefone);
                     $request->session() ->put('acesso',1); //para controlar mensagem de boas vindas no index
                     $request->session() ->put('lockscreen',0); //para controlar tela de bloqueio
                     if ($result[0]->permissao != 0) {

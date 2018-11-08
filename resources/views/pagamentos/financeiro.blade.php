@@ -49,9 +49,10 @@
 
                         <div class="col-lg-8  adesao">
                             <div class="table-responsive">
-                                <table class=" table table-striped table-bordered table-hover dataTable " id="teste" role="grid">
+                                <table class=" table table-striped table-bordered table-hover dataTable " id="planos-table" role="grid" cellspacing="0" width="100%">
                                     <thead>
                                         <tr scope="row">
+                                            <th scope="col" class="text-center" style="color:#00bf86;"></th>
                                             <th scope="col" class="text-center" style="color:#00bf86;">Nome</th>
                                             <th scope="col" class="text-center" style="color:#00bf86;">Data de Cadastro</th>
                                             <th scope="col" class="text-center" style="color:#00bf86;">Valor Mensal</th>
@@ -60,44 +61,9 @@
                                             <th nowrap width=8% scope="col" class="text-center" style="color:#00bf86;">Cancelar Serviço</th>
                                         </tr>
                                     </thead>
+                                   
                                     <tbody>
-                                        @foreach ($planos as $plano)
-                                            <tr>
-                                                <th class="text-center">{{ $plano->nome_plano }}</th>
-                                                <th class="text-center">{{ $plano->created_at->format('d/m/Y') }}</th>
-                                                <th class="text-center">R$ {{ $plano->preco_plano }},00</th>
-                                                <th class="text-center">{{ date('m', strtotime("+365 days",strtotime( $plano->created_at ))) }} Meses</th>
-                                                
-                                                @if($plano->renovacao_auto == 1)                                                        
-                                                    <th class="text-center"><a href="{{ URL::to($acao . $plano->id) }}"><i class="fa fa-check text-success" title="ATIVADO: click para desativar renovação automática"></i><a></th>                                                            
-                                                @else
-                                                    <th class="text-center"><a href="{{ URL::to($acao . $plano->id) }}"><i class="fa fa-close text-dark" title="DESATIVADO: click para ativar renovação automática"></i></a></th>
-                                                @endif
-
-                                                <th class="text-center"><a href="#" id="icon" data-toggle="modal" data-target="#modalCancelPlano"><i class="fa fa-ban text-danger" title="Cancelar Serviço" class="iconRenova"></i></a></th>
-                                            </tr>
-                                            
-                                            <!-- Modal Cancelamento-->
-                                            <div class="modal fade" id="modalCancelPlano" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <img src="{{ asset('assets/img/logo_vitrine.png') }}" class="admin_img">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                    Tem certeza que deseja cancelar?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Voltar</button>
-                                                    <a href={{ "financeiro/cancelamento/" . $plano->id }} ><button type="submit" class="btn btn-primary">Cancelar</button></a>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -245,11 +211,6 @@
                             </form>
                         </div>
                         <div class="clearfix"></div>
-                        <div class="col m-t-5">
-                            <a href="javascript:window.history.go(-1)">
-                                <button type="button" class="btn btn-dark mt-3" style="width: 160px;">Voltar</button>
-                            </a>
-                        </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
