@@ -47,7 +47,7 @@
                             <h5>Planos Contratados:</h5>
                         </div>                            
 
-                        <div class="col-lg-8  adesao">
+                        <div class="col-lg-12  adesao">
                             <div class="table-responsive">
                                 <table class=" table table-striped table-bordered table-hover dataTable " id="planos-table" role="grid" cellspacing="0" width="100%">
                                     <thead>
@@ -101,7 +101,7 @@
                             <div class="col-lg-2 m-t-30">
                                 <h5>Cadastrado:</h5>
                             </div>
-                            <div class="col-lg-8  adesao">
+                            <div class="col-lg-12  adesao">
                                 <div class="table-responsive">
                                     <table class=" table table-striped table-bordered table-hover dataTable m-t-20" id="teste" role="grid">
                                         <thead>
