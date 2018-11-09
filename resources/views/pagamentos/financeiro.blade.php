@@ -49,26 +49,22 @@
 
                         <div class="col-lg-8  adesao">
                             <div class="table-responsive">
-                                <table class=" table table-striped table-bordered table-hover dataTable " id="planos-table" role="grid" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr scope="row">
-                                            <th scope="col" class="text-center" style="color:#00bf86;"></th>
-                                            <th scope="col" class="text-center" style="color:#00bf86;">Nome</th>
-                                            <th scope="col" class="text-center" style="color:#00bf86;">Data de Cadastro</th>
-                                            <th scope="col" class="text-center" style="color:#00bf86;">Valor Mensal</th>
-                                            <th scope="col" class="text-center" style="color:#00bf86;">Vigência</th>
-                                            <th nowrap width=10% scope="col" class="text-center" style="color:#00bf86;">Renovação Automática</th>
-                                            <th nowrap width=8% scope="col" class="text-center" style="color:#00bf86;">Cancelar Serviço</th>
-                                        </tr>
-                                    </thead>
-                                   
-                                    <tbody>
-                                        
-                                    </tbody>
-                                </table>
+                                    <table class="table table-striped table-bordered table-hover dataTable no-footer text-center" id="planos-table" role="grid" cellspacing="0">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting_asc wid-10" tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;"></th>
+                                                <th class="sorting_asc wid-10" tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Nome</th>
+                                                <th class="sorting wid-20 text-center " tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Data de Cadastro</th>
+                                                <th class="sorting wid-20 text-center " tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Valor Mensal</th>
+                                                <th class="sorting wid-20 text-center " tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Vigência</th>
+                                                <th class="sorting wid-20 text-center " tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Renovação Automática</th>
+                                                <th class="sorting wid-20 text-center " tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Cancelar Serviço</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
                             </div>
                         </div>
-                        <br>
+                       
 
                         <div class="contatofinanceiro">
                             <div class="m-t-30">
@@ -84,7 +80,7 @@
                                 <div class="col-lg-8 m-t-30">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input name="email_fatura" type="email" class="form-control col-lg-12" style="font-style: italic;" value="{{$planos[0]->email_fatura}}" >
+                                            <input name="email_fatura" type="email" class="form-control col-lg-12" style="font-style: italic;" value="" >
                                         </div>
                                             <button type="submit"class="btn btn-success">Editar</button>
                                     </div>
@@ -141,7 +137,7 @@
 
                             <form action="{{ URL::to($editPagamento) }}" method="post" novalidate id="formEditPlano">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="id_pedido" value="{{ $planos[0]->id }}">  
+                                <input type="hidden" name="id_pedido" value="">  
 
                                 <div id="Pagamento" style="display:none">
                                 
