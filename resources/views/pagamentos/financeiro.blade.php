@@ -126,7 +126,7 @@
                                                         @default
                                                     @endswitch
                                                     <th class="text-center">
-                                                        <button class="fa fa-pencil text-warning" title="Click para editar a Forma de Pagamento" 
+                                                        <button id="read-data" class="fa fa-pencil text-warning" title="Click para editar a Forma de Pagamento" 
                                                         style="
                                                         background-color: transparent;
                                                         border-color: transparent;

@@ -607,6 +607,15 @@ z-index: 999999">
             $('#cvv_cartao').val (data.cvv_cartao);
         });
     }
+
+
+    //Ajax Pagamentos
+
+    $('#read-data').on('click',function(id){
+        $.get('plano/' +id, function(data){
+            console.log(data);
+        });
+    })
     
 //DataTable Financeiro
     $(document).ready(function() {

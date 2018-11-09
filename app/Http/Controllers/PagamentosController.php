@@ -102,7 +102,7 @@ class PagamentosController  extends Controller
         }
         $plano->nome_plano = $request->nome_plano;             
         $plano->preco_plano = $request->preco_plano;             
-        $plano->forma_pgto = $request->radio == 1 ? 1 : 2 ;
+        $plano->forma_pgto = $request->radio == '1' ? '1' : '2' ;
 		$plano->nome_cartao = $request->nome_cartao;
 		$plano->numero_cartao = $request->numero_cartao;
 		$plano->mes_cartao = $request->mes_cartao;
