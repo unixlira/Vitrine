@@ -240,11 +240,11 @@
 var TableAdvanced = function() {
 
         // `d` is the original data object for the row
-        function format ( d ) {
+        function format ( full ) {
 
             return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
                 '<tr>'+
-                    '<td>Posições Vitrine:<br>3</td>'+
+                    '<td>Posições Vitrine:<br>'+full['id']+'</td>'+
                     
                     '<td style="padding-left:10px;">Relatório Métricas:<br><i class="fa fa-check text-success"></td>'+
                     
