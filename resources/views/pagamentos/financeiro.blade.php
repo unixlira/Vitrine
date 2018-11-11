@@ -47,24 +47,28 @@
                             <h5>Planos Contratados:</h5>
                         </div>                            
 
-                        <div class="col-lg-8  adesao">
+                        <div class="col-lg-12  adesao">
                             <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover dataTable no-footer text-center" id="planos-table" role="grid" cellspacing="0">
-                                        <thead>
-                                            <tr role="row">
-                                                <th class="sorting_asc wid-10" tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;"></th>
-                                                <th class="sorting_asc wid-10" tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Nome</th>
-                                                <th class="sorting wid-20 text-center " tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Data de Cadastro</th>
-                                                <th class="sorting wid-20 text-center " tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Valor Mensal</th>
-                                                <th class="sorting wid-20 text-center " tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Vigência</th>
-                                                <th class="sorting wid-20 text-center " tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Renovação Automática</th>
-                                                <th class="sorting wid-20 text-center " tabindex="0" rowspan="1" colspan="1" style="color:#00bf86;">Cancelar Serviço</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                <table class=" table table-striped table-bordered table-hover dataTable " id="listPlanos" role="grid" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr scope="row">
+                                            <th scope="col" class="text-center" style="color:#00bf86;"></th>
+                                            <th scope="col" class="text-center" style="color:#00bf86;">Nome</th>
+                                            <th scope="col" class="text-center" style="color:#00bf86;">Data de Cadastro</th>
+                                            <th scope="col" class="text-center" style="color:#00bf86;">Valor Mensal</th>
+                                            <th scope="col" class="text-center" style="color:#00bf86;">Vigência</th>
+                                            <th nowrap width=10% scope="col" class="text-center" style="color:#00bf86;">Renovação Automática</th>
+                                            <th nowrap width=8% scope="col" class="text-center" style="color:#00bf86;">Cancelar Serviço</th>
+                                        </tr>
+                                    </thead>
+                                   
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                       
+                        <br>
 
                         <div class="contatofinanceiro">
                             <div class="m-t-30">
@@ -80,7 +84,7 @@
                                 <div class="col-lg-8 m-t-30">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input name="email_fatura" type="email" class="form-control col-lg-12" style="font-style: italic;" value="" >
+                                            <input name="email_fatura" type="email" class="form-control col-lg-12" style="font-style: italic;" value="{{$planos[0]->email_fatura}}" >
                                         </div>
                                             <button type="submit"class="btn btn-success">Editar</button>
                                     </div>
@@ -97,7 +101,7 @@
                             <div class="col-lg-2 m-t-30">
                                 <h5>Cadastrado:</h5>
                             </div>
-                            <div class="col-lg-8  adesao">
+                            <div class="col-lg-12  adesao">
                                 <div class="table-responsive">
                                     <table class=" table table-striped table-bordered table-hover dataTable m-t-20" id="teste" role="grid">
                                         <thead>
@@ -137,7 +141,7 @@
 
                             <form action="{{ URL::to($editPagamento) }}" method="post" novalidate id="formEditPlano">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="id_pedido" value="">  
+                                <input type="hidden" name="id_pedido" value="{{ $planos[0]->id }}">  
 
                                 <div id="Pagamento" style="display:none">
                                 
@@ -159,7 +163,7 @@
                                             <img src="{{asset('assets/img/pagamentos/diners.png')}}" width="100" height="30" class="m-l-20">
                                         </div>
                                         
-                                        <div class="col-md-8 dadosCartao ">
+                                        <div class="col-md-10 dadosCartao">
                                             <div class="col m-t-30">
                                                 <label for="nome_cartao"><b>Nome impresso no Cartão</b></label>
                                                 <input type="text" name="nome_cartao" id="nome_cartao" class="form-control col-lg-12" style="font-style: italic;">
@@ -215,3 +219,245 @@
     </main>
     @stop
 
+@section('footer_scripts')
+    <!--Plugin scripts-->
+    <script type="text/javascript" src="{{asset('assets/vendors/select2/js/select2.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/jquery.dataTables.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/pluginjs/dataTables.tableTools.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.colReorder.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.buttons.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.responsive.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.rowReorder.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.colVis.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.html5.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.print.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.scroller.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/pages/users.js')}}"></script>
+    <!-- end page level scripts -->
+    <script type="text/javascript">
+var TableAdvanced = function() {
+
+        // `d` is the original data object for the row
+        function format ( d ) {
+
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                '<tr>'+
+                    '<td>Posições Vitrine:<br>3</td>'+
+                    
+                    '<td style="padding-left:10px;">Relatório Métricas:<br><i class="fa fa-check text-success"></td>'+
+                    
+                    '<td style="padding-left:10px;">Base de dados de Clientes:<br><i class="fa fa-close"></td>'+
+                    
+                    '<td style="padding-left:10px;">Push Notification:<br><i class="fa fa-close"></td>'+
+                    
+                    '<td style="padding-left:10px;">Prioridade de divulgação:<br><i class="fa fa-close"></td>'+
+                    
+                '</tr>'+
+            '</table>';
+        }
+    // ===============table 1====================
+    var initTable1 = function() {
+        var table = $('#listPlanos');
+        var oTable = '';
+        /* Table tools samples: https://www.datatables.net/release-datatables/extras/TableTools/ */
+        /* Set tabletools buttons and button container */
+       oTable =  table.DataTable({
+            "destroy": true,
+            "processing": true,
+            "serverSide": true,
+            "ajax": "{{ url('datatable/getplanos') }}",
+            "columns": [ 
+                    {
+                        "className":  'details-control',
+                        "processing": true,
+                        "serverSide": true,
+                        "responsive": true,
+                        "orderable":  false,
+                        "searching":  false,
+                        "data":       null,
+                        "defaultContent": '<span class="row-details row-details-close"></span>'
+                    },
+                {data: 'nome_plano'},
+                {data: 'created_at', name: 'created_at', "render": function ( data, type, row, meta )
+                    {
+                            var dataAtual = new Date(data);
+                            var dia = dataAtual.getDate();
+                            var mes = dataAtual.getMonth()+1;
+                            var ano = dataAtual.getFullYear();
+                            var hora = dataAtual.getHours();
+                            var minuto = dataAtual.getMinutes();
+                            var segundo = dataAtual.getSeconds();
+                            var horaImprimivel = hora + ":" + minuto + ":" + segundo;
+
+                            if (dia.toString().length == 1){
+                              dia = "0"+dia;
+                            }
+                            if (mes.toString().length == 1){
+                              mes = "0"+mes;
+                            }
+                            if (hora.toString().length == 1){
+                              hora = "0"+hora;
+                            }
+                            if (minuto.toString().length == 1){
+                              minuto = "0"+minuto;
+                            }
+                            if (segundo.toString().length == 1){
+                              segundo = "0"+segundo;
+                            }
+                            
+                            return dia +'/'+mes+'/'+ano+' - '+hora+':'+minuto+':'+segundo;
+                            //return dataAtual;
+                    }
+                },
+                {data: 'preco_plano', name: 'preco_plano', "render": function(data, type, row, meta )
+                    {
+                        var preco = "R$ "+data+",00";
+
+                        return preco;
+                    }
+
+
+                },
+                {data: 'created_at', name: 'created_at', "render": function ( data, type, row, meta )
+                    {
+                            var dataAtual = new Date(data);
+                            var dia = dataAtual.getDate();
+                            var mes = dataAtual.getMonth()+1;
+                            var ano = dataAtual.getFullYear()+1;
+                            var hora = dataAtual.getHours();
+                            var minuto = dataAtual.getMinutes();
+                            var segundo = dataAtual.getSeconds();
+                            var horaImprimivel = hora + ":" + minuto + ":" + segundo;
+
+                            if (dia.toString().length == 1){
+                              dia = "0"+dia;
+                            }
+                            if (mes.toString().length == 1){
+                              mes = "0"+mes;
+                            }
+                            if (hora.toString().length == 1){
+                              hora = "0"+hora;
+                            }
+                            if (minuto.toString().length == 1){
+                              minuto = "0"+minuto;
+                            }
+                            if (segundo.toString().length == 1){
+                              segundo = "0"+segundo;
+                            }
+                            
+                            return dia +'/'+mes+'/'+ano;
+                            //return dataAtual;
+                    }
+                },               
+                {data: 'id','render':function( data, type, full)
+                    {
+                        if( full['renovacao_auto'] == 1){
+                            return  '<th class="text-center"><a href="financeiro/renovacao_automatica/'+ data +'"><i class="fa fa-check text-success" title="ATIVADO: click para desativar renovação automática"></i><a></th>';
+                        }else{
+                            return  '<th class="text-center"><a href="financeiro/renovacao_automatica/'+ data +'"><i class="fa fa-close text-dark" title="DESATIVADO: click para ativar renovação automática"></i></a></th>';
+                        }
+                    }
+                
+                },
+                {data: 'id', "render": function ( data, type, row, meta )
+                    {
+                        return '<a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="" href="financeiro/cancelamento/'+ data +'" data-original-title="Bloquear"><i class="fa fa-ban text-danger"></i></a>';
+                        
+                    }
+                }
+            ],
+            "language": {
+            "sEmptyTable": "Nenhum registro encontrado",
+            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sInfoThousands": ".",
+            "sLengthMenu": "Mostrar _MENU_ entradas",
+            "sLoadingRecords": "Carregando...",
+            "sProcessing": "Processando...",
+            "sZeroRecords": "Nenhum registro encontrado",
+            "sSearch": "Buscar",
+            "oPaginate": {
+                "sNext": "Próximo",
+                "sPrevious": "Anterior",
+                "sFirst": "Primeiro",
+                "sLast": "Último"
+            },
+            "oAria": {
+                "sSortAscending": ": Ordenar colunas de forma ascendente",
+                "sSortDescending": ": Ordenar colunas de forma descendente"
+            }
+        }                        
+
+
+    });
+
+        var tableWrapper = $('#sample_1_wrapper'); // datatable creates the table wrapper by adding with id {your_table_id}_wrapper
+        tableWrapper.find('.dataTables_length select').select2(); // initialize select2 dropdown
+
+
+ 
+
+    $(document).ready(function() { 
+         // Evento que abre e fecha os detalhes
+        table.on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = oTable.row( tr );
+    
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                tr.removeClass('shown');
+                row.child.hide();
+            }
+            else {
+                // Open this row
+                tr.addClass('shown');
+                row.child( format(row.data()) ).show();
+            }
+        } );
+    } );
+
+    }
+    // ===============table 1===============
+    return {
+        //main function to initiate the module
+        init: function() {
+            if (!jQuery().dataTable) {
+                return;
+            }
+            initTable1();
+        }
+    };    
+}(); 
+
+//Troca icon Renovação Auto
+$('a').click(function() {
+    $(this).find('i').toggleClass('fa fa-check text-success fa fa-close text-dark');
+});
+
+// Retorno de dados do cartão de crédito cadastrado
+    function readFormaPagamento(id){
+        $('#Pagamento').fadeToggle();
+        $.get('/pagamentos/financeiro/plano/' +id, function(data){
+            $('#nome_cartao').val (data.nome_cartao);
+            $('#numero_cartao').val (data.numero_cartao);
+            $('#mes_cartao').val (data.mes_cartao);
+            $('#ano_cartao').val (data.ano_cartao);
+            $('#cvv_cartao').val (data.cvv_cartao);
+        });
+    }
+
+
+    //Ajax Pagamentos
+
+    $('#read-data').on('click',function(id){
+        $.get('pagamentos/financeiro/plano/' +id, function(data){
+            console.log(data);
+        });
+    })
+
+</script>
+@stop

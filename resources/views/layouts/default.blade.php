@@ -13,7 +13,7 @@
     <link type="text/css" rel="stylesheet" href="{{asset('assets/css/components.css')}}"/>
     <link type="text/css" rel="stylesheet" href="{{asset('assets/css/custom.css')}}"/>
     <link type="text/css" rel="stylesheet" href="{{asset('assets/css/chat.css')}}"/>
-    <link type="text/css" rel="stylesheet" href="#" id="skin_change"/>    
+    <!-- <link type="text/css" rel="stylesheet" href="#" id="skin_change"/> -->    
     <!-- end of global styles-->
     <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/c3/css/c3.min.css')}}"/>
     <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/toastr/css/toastr.min.css')}}"/>
@@ -27,9 +27,6 @@
     <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/datatables/css/dataTables.bootstrap.min.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/responsive.dataTables.css')}}">
     <link type="text/css" rel="stylesheet" href="{{asset('assets/css/pages/dataTables.bootstrap.css')}}" />
-    <link type="text/css" rel="stylesheet" href="{{asset('assets/css/pages/dataTables.buttons.js')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/buttons.bootstrap.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="http://www.datatables.net/release-datatables/extensions/TableTools/css/dataTables.tableTools.css">
     <!--End of plugin styles-->
     <!--Page level styles-->
     <link type="text/css" rel="stylesheet" href="{{asset('assets/css/pages/tables.css')}}"/>
@@ -566,15 +563,7 @@ z-index: 999999">
         });
     });
 //FINANCEIRO 
-
-    $('a').click(function() {
-        $(this).find('i').toggleClass('fa fa-check text-success fa fa-close text-dark');
-    });
-
-
-  
-    
-    
+      
 
 //Modal 
         $(function(){
@@ -596,154 +585,8 @@ z-index: 999999">
                     myModal.modal('hide');
                 }, 3000));
             });
-        });
-
-    
-
-//Ajax Pagamentos
-    function readFormaPagamento(id){
-        $('#Pagamento').fadeToggle();
-        $.get('/pagamentos/financeiro/plano/' +id, function(data){
-            $('#nome_cartao').val (data.nome_cartao);
-            $('#numero_cartao').val (data.numero_cartao);
-            $('#mes_cartao').val (data.mes_cartao);
-            $('#ano_cartao').val (data.ano_cartao);
-            $('#cvv_cartao').val (data.cvv_cartao);
-        });
-    }
-
-
-    //Ajax Pagamentos
-
-    $('#read-data').on('click',function(id){
-        $.get('plano/' +id, function(data){
-            console.log(data);
-        });
-    })
-    
-//DataTable Financeiro
-
-var TableAdvanced = function() {
-
-    function format ( d ) {
-        // `d` is the original data object for the row
-        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-            '<tr>'+
-                '<td>Posições Vitrine:<br>3</td>'+
-                
-                '<td style="padding-left:10px;">Relatório Métricas:<br><i class="fa fa-check text-success"></td>'+
-                
-                '<td style="padding-left:10px;">Base de dados de Clientes:<br><i class="fa fa-close"></td>'+
-                
-                '<td style="padding-left:10px;">Push Notification:<br><i class="fa fa-close"></td>'+
-                
-                '<td style="padding-left:10px;">Prioridade de divulgação:<br><i class="fa fa-close"></td>'+
-                
-            '</tr>'+
-        '</table>';
-    }
-
-    
-    var table = $('#planos-table');
-    var oTable = '';
-    
-
-    oTable = table.DataTable({
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        "ajax": "{{ url('datatable/getplanos') }}",
-        "columns": [
-            {
-                "className":      'details-control',
-                "processing": true,
-                "serverSide": true,
-                "responsive": true,
-                "orderable":      false,
-                "searchable":     false,
-                "data":           null,
-                "defaultContent": '<span class="row-details row-details-close"></span>'
-            },
-            {data: 'nome_plano'},
-            {data: 'created_at'},
-            {data: 'preco_plano'},
-            {data: 'created_at'},
-            {data: 'id','render':function( data, type, full)
-                {
-                    if( full['renovacao_auto'] == 1){
-                        return  '<th class="text-center"><a href="financeiro/renovacao_automatica/'+ data +'"><i class="fa fa-check text-success" title="ATIVADO: click para desativar renovação automática"></i><a></th>';
-                    }else{
-                        return  '<th class="text-center"><a href="financeiro/renovacao_automatica/'+ data +'"><i class="fa fa-close text-dark" title="DESATIVADO: click para ativar renovação automática"></i></a></th>';
-                    }
-                }
-            
-            },
-            {data: 'id', "render": function ( data, type, row, meta )
-                {
-                    return '<a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="" href="financeiro/cancelamento/'+ data +'" data-original-title="Bloquear"><i class="fa fa-ban text-danger"></i></a>';
-                    
-                }
-            }
-        ],
-
-        "language": 
-            {
-                "sEmptyTable": "Nenhum registro encontrado",
-                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sInfoThousands": ".",
-                "sLengthMenu": "Mostrar _MENU_ entradas",
-                "sLoadingRecords": "Carregando...",
-                "sProcessing": "Processando...",
-                "sZeroRecords": "Nenhum registro encontrado",
-                "sSearch": "Buscar",
-                "oPaginate": {
-                    "sNext": "Próximo",
-                    "sPrevious": "Anterior",
-                    "sFirst": "Primeiro",
-                    "sLast": "Último"
-                },
-                "oAria": {
-                    "sSortAscending": ": Ordenar colunas de forma ascendente",
-                    "sSortDescending": ": Ordenar colunas de forma descendente"
-                }
-            }
-        
-            
-    } );
-
-    // Modifica o ícon do renovação Automática
-    $('#planos-table tbody').on('click', 'a', function () {       
-        $(this).find('i').toggleClass('fa fa-check text-success fa fa-close text-dark');
-    } );
-
-    //Inserir o Row Child
-    
-    $(document).ready(function() { 
-        // Evento que abre e fecha os detalhes
-        table.on('click', 'td.details-control', function () {
-            var tr = $(this).closest('tr');
-            var row = oTable.row( tr );
-    
-            if ( row.child.isShown() ) {
-                // This row is already open - close it
-                tr.removeClass('details');
-                row.child.hide();
-            }
-            else {
-                // Open this row
-                tr.addClass('details');
-                row.child( format(row.data()) ).show();
-            }
-        } );
-    } );
-    
-
-}();
-
-    
+        }); 
+   
 
 </script>
 <!-- end of global scripts-->
