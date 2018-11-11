@@ -242,7 +242,7 @@ var TableAdvanced = function() {
         // `d` is the original data object for the row
         function format ( full ) {
 
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+            return '<table class="table-striped table-bordered table-hover" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
                 '<tr>'+
                     '<td>Posições Vitrine:<br>'+full['id']+'</td>'+
                     
@@ -433,12 +433,12 @@ var TableAdvanced = function() {
     };    
 }(); 
 
-//Troca icon Renovação Auto
-$('a').click(function() {
-    $(this).find('i').toggleClass('fa fa-check text-success fa fa-close text-dark');
-});
+    //Troca icon Renovação Auto
+    $('a').click(function() {
+        $(this).find('i').toggleClass('fa fa-check text-success fa fa-close text-dark');
+    });
 
-// Retorno de dados do cartão de crédito cadastrado
+    // Retorno de dados do cartão de crédito cadastrado
     function readFormaPagamento(id){
         $('#Pagamento').fadeToggle();
         $.get('/pagamentos/financeiro/plano/' +id, function(data){
@@ -452,10 +452,8 @@ $('a').click(function() {
 
 
     //Ajax Pagamentos
-
     $('#read-data').on('click',function(id){
         $.get('pagamentos/financeiro/plano/' +id, function(data){
-            console.log(data);
         });
     })
 
