@@ -141,7 +141,7 @@
 
                             <form action="{{ URL::to($editPagamento) }}" method="post" novalidate id="formEditPlano">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="id_pedido" value="{{ $planos[0]->id }}">  
+                                <input type="hidden" name="id_pedido" value="{{ $planos[0]->id}}">  
 
                                 <div id="Pagamento" style="display:none">
                                 
@@ -240,20 +240,16 @@
 var TableAdvanced = function() {
 
         // `d` is the original data object for the row
-        function format ( full ) {
+        function format ( row ) {
 
-            return '<table class="table-striped table-bordered table-hover" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+            return '<table class="table-striped table-bordered table-hover" col-md-12 cellpadding="5" cellspacing="0" border="10" style="padding-left:50px;">'+
                 '<tr>'+
-                    '<td>Posições Vitrine:<br>'+full['id']+'</td>'+
-                    
-                    '<td style="padding-left:10px;">Relatório Métricas:<br><i class="fa fa-check text-success"></td>'+
-                    
-                    '<td style="padding-left:10px;">Base de dados de Clientes:<br><i class="fa fa-close"></td>'+
-                    
-                    '<td style="padding-left:10px;">Push Notification:<br><i class="fa fa-close"></td>'+
-                    
-                    '<td style="padding-left:10px;">Prioridade de divulgação:<br><i class="fa fa-close"></td>'+
-                    
+                    '<td><b>Detalhes<br>do Plano:</b></td>'+                    
+                    '<td><b>Posições Vitrine</b><br>'+row['posicoes_vitrine']+'</td>'+                    
+                    '<td><b>Relatório Métricas</b><br>'+(row['relatorios_metricas'] == 1 ? '<i class="fa fa-check text-success"></td>' :'<i class="fa fa-close"></td>')+
+                    '<td><b>Base de dados de Clientes</b><br>'+(row['base_dados_clientes'] ==1 ? '<i class="fa fa-check text-success"></td>' :'<i class="fa fa-close"></td>')+     
+                    '<td><b>Push Notification</b><br>'+(row['push_notification'] == 1 ? '<i class="fa fa-check text-success"></td>' :'<i class="fa fa-close"></td>')+
+                    '<td><b>Prioridade de Divulgação</b><br>'+(row['prioridade_divulgacao'] == 1 ? '<i class="fa fa-check text-success"></td>' :'<i class="fa fa-close"></td>')+
                 '</tr>'+
             '</table>';
         }
@@ -264,6 +260,7 @@ var TableAdvanced = function() {
         /* Table tools samples: https://www.datatables.net/release-datatables/extras/TableTools/ */
         /* Set tabletools buttons and button container */
        oTable =  table.DataTable({
+           
             "destroy": true,
             "processing": true,
             "serverSide": true,
@@ -271,6 +268,7 @@ var TableAdvanced = function() {
             "columns": [ 
                     {
                         "className":  'details-control',
+                        "ordering": true,
                         "processing": true,
                         "serverSide": true,
                         "responsive": true,
@@ -351,9 +349,9 @@ var TableAdvanced = function() {
                             //return dataAtual;
                     }
                 },               
-                {data: 'id','render':function( data, type, full)
+                {data: 'id','render':function( data, type, row)
                     {
-                        if( full['renovacao_auto'] == 1){
+                        if( row['renovacao_auto'] == 1){
                             return  '<th class="text-center"><a href="financeiro/renovacao_automatica/'+ data +'"><i class="fa fa-check text-success" title="ATIVADO: click para desativar renovação automática"></i><a></th>';
                         }else{
                             return  '<th class="text-center"><a href="financeiro/renovacao_automatica/'+ data +'"><i class="fa fa-close text-dark" title="DESATIVADO: click para ativar renovação automática"></i></a></th>';
@@ -393,13 +391,7 @@ var TableAdvanced = function() {
         }                        
 
 
-    });
-
-        var tableWrapper = $('#sample_1_wrapper'); // datatable creates the table wrapper by adding with id {your_table_id}_wrapper
-        tableWrapper.find('.dataTables_length select').select2(); // initialize select2 dropdown
-
-
- 
+    }); 
 
     $(document).ready(function() { 
          // Evento que abre e fecha os detalhes

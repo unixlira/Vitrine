@@ -35,8 +35,13 @@ class PagamentosController  extends Controller
 
     public function financeiro(){
         
+
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
         $planos = Pedidos::where('id_usuario', '=', $user->id)->get();
+        if(count($planos) <=0){
+            return redirect ('pagamentos/planos');
+        }
+
         $acao = "/pagamentos/financeiro/renovacao_automatica/".$planos[0]->id;
         $editPagamento = "pagamentos/financeiro/editar/".$planos[0]->id;
         $alteraemail = "/pagamentos/financeiro/alteraemail/";
@@ -163,9 +168,12 @@ class PagamentosController  extends Controller
     public function getPlanos()
     {
         $user = Usuarios::find(\Request::session()->get('id_usuario'));
-        $planos = Pedidos::where('id_usuario', '=', $user->id)->get();     
+        $plano = DB::table('planos')
+            ->join('pedidos_planos', 'planos.id', '=', 'pedidos_planos.id_plano')
+            ->where('pedidos_planos.id_usuario', '=', $user->id)        
+            ->get();
         
-        return Datatables::of($planos)->make(true);
+        return Datatables::of($plano)->make(true);
     }
   
 		
