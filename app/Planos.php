@@ -11,7 +11,7 @@ class Planos extends Model
     public $timestamps = true;
    
 
-    protected $fillable = array( 'id', 'id_usuario', 'id_plano','nome', 'preco','posicoes_vitrine', 'relatorios_metricas', 'base_dados_clientes', 'push_notification', 'prioridade_divulgacao',  'created_at', 'updated_at');
+    protected $fillable = array( 'id', 'id_usuario', 'id_plano','nome', 'preco', 'created_at', 'updated_at');
 
     public function usuarios(){
         

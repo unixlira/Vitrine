@@ -238,10 +238,8 @@
     <!-- end page level scripts -->
     <script type="text/javascript">
 var TableAdvanced = function() {
-
         // `d` is the original data object for the row
         function format ( row ) {
-
             return '<table class="table-striped table-bordered table-hover" col-md-12 cellpadding="5" cellspacing="0" border="10" style="padding-left:50px;">'+
                 '<tr>'+
                     '<td><b>Detalhes<br>do Plano:</b></td>'+                    
@@ -288,7 +286,6 @@ var TableAdvanced = function() {
                             var minuto = dataAtual.getMinutes();
                             var segundo = dataAtual.getSeconds();
                             var horaImprimivel = hora + ":" + minuto + ":" + segundo;
-
                             if (dia.toString().length == 1){
                               dia = "0"+dia;
                             }
@@ -312,11 +309,8 @@ var TableAdvanced = function() {
                 {data: 'preco_plano', name: 'preco_plano', "render": function(data, type, row, meta )
                     {
                         var preco = "R$ "+data+",00";
-
                         return preco;
                     }
-
-
                 },
                 {data: 'created_at', name: 'created_at', "render": function ( data, type, row, meta )
                     {
@@ -328,7 +322,6 @@ var TableAdvanced = function() {
                             var minuto = dataAtual.getMinutes();
                             var segundo = dataAtual.getSeconds();
                             var horaImprimivel = hora + ":" + minuto + ":" + segundo;
-
                             if (dia.toString().length == 1){
                               dia = "0"+dia;
                             }
@@ -389,10 +382,7 @@ var TableAdvanced = function() {
                 "sSortDescending": ": Ordenar colunas de forma descendente"
             }
         }                        
-
-
     }); 
-
     $(document).ready(function() { 
          // Evento que abre e fecha os detalhes
         table.on('click', 'td.details-control', function () {
@@ -411,7 +401,6 @@ var TableAdvanced = function() {
             }
         } );
     } );
-
     }
     // ===============table 1===============
     return {
@@ -424,12 +413,10 @@ var TableAdvanced = function() {
         }
     };    
 }(); 
-
     //Troca icon Renovação Auto
     $('a').click(function() {
         $(this).find('i').toggleClass('fa fa-check text-success fa fa-close text-dark');
     });
-
     // Retorno de dados do cartão de crédito cadastrado
     function readFormaPagamento(id){
         $('#Pagamento').fadeToggle();
@@ -441,13 +428,10 @@ var TableAdvanced = function() {
             $('#cvv_cartao').val (data.cvv_cartao);
         });
     }
-
-
     //Ajax Pagamentos
     $('#read-data').on('click',function(id){
         $.get('pagamentos/financeiro/plano/' +id, function(data){
         });
     })
-
 </script>
 @stop
